@@ -1,16 +1,39 @@
-import { SafeAreaView, StyleSheet, Text, View, Image } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
-import LinearGradient from "react-native-linear-gradient";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { useNavigation } from "expo-router";
 
-const Header = () => {
+const Header = ({ isCart }) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <View style={styles.appIconContainer}>
-        <Image
-          source={require("../../assets/images/appIcon.webp")}
-          style={styles.appIcon}
-        />
-      </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Home")}
+        style={styles.appIconContainer}
+      >
+        {isCart ? (
+          <Ionicons name="chevron-back" color="#000" size={24} />
+        ) : (
+          <Image
+            source={require("../../assets/images/appIcon.webp")}
+            style={styles.appIcon}
+          />
+        )}
+      </TouchableOpacity>
+      {isCart ? (
+        <Text style={{ fontSize: 28, color: "black" }}>My Cart</Text>
+      ) : (
+        ""
+      )}
+
       <Image
         source={require("../../assets/images/userIcon.jpg")}
         style={styles.dp}

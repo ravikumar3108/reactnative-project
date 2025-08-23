@@ -1,17 +1,17 @@
-import {
-  FlatList,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-import Header from "../../components/utilities/Header";
-import Category from "../../components/utilities/Category";
-import ProductCards from "../../components/utilities/ProductCards";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
+import {
+    FlatList,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TextInput,
+    View
+} from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Category from "../components/utilities/Category";
+import Header from "../components/utilities/Header";
+import ProductCards from "../components/utilities/ProductCards";
+import {Products} from "../components/Data"
 
 const categories = ["Trending Now", "All", "New", "Mens", "Womens"];
 
@@ -23,7 +23,6 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.mainConatiner}>
       <View style={styles.homeContainer}>
         <Header />
-
         {/* product section  */}
         <FlatList
           ListHeaderComponent={
@@ -54,7 +53,7 @@ export default function HomeScreen() {
               />
             </>
           }
-          data={[1, 2, 3, 4, 5, 6]}
+          data={Products}
           renderItem={({ item, index }) => (
             <ProductCards
               item={item}

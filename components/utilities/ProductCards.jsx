@@ -9,17 +9,19 @@ import {
 import React, { useState } from "react";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { useNavigation } from "@react-navigation/native";
 
 const ProductCards = ({ setIsLiked, item, isLiked }) => {
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("../../assets/images/womenClothes2.avif")}
-        style={styles.productImage}
-      />
+    <TouchableOpacity
+      onPress={() => navigation.navigate("PRODUCT_DETAILS", { item })}
+      style={styles.container}
+    >
+      <Image source={{ uri: item.images[0] }} style={styles.productImage} />
       <View style={styles.content}>
-        <Text style={styles.title}>ProductCards</Text>
-        <Text style={styles.price}>$29.4</Text>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.price}>${item.price}</Text>
       </View>
       <TouchableOpacity
         onPress={() => setIsLiked(!isLiked)}
@@ -31,7 +33,7 @@ const ProductCards = ({ setIsLiked, item, isLiked }) => {
           <Feather name="heart" color="#000" size={24} />
         )}
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: "relative",
-    marginTop:20
+    marginTop: 20,
   },
   productImage: {
     height: 256,
