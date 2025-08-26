@@ -7,9 +7,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../utilities/Header";
 import { useRoute } from "@react-navigation/native";
+import { CartContext } from "../context/CartContext";
+import { useNavigation } from "expo-router";
 
 const sizes = ["S", "M", "L", "XL"];
 const colors = [
@@ -23,11 +25,19 @@ const colors = [
 
 const ProductDetails = () => {
   const route = useRoute();
-  const item = route.params.item
-//   console.log(route.params.item);
-
+  const item = route.params.item;
+  //   console.log(route.params.item);
+  const navigation = useNavigation();
+  const { addToCart } = useContext(CartContext);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
+
+  const handleAddToCart = (item) => {
+    item.size = selectedSize;
+    item.color = selectedColor;
+    addToCart(item);
+    navigation.navigate("Cart");
+  };
 
   return (
     <SafeAreaView style={styles.mainConatiner}>
@@ -37,10 +47,7 @@ const ProductDetails = () => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 100 }}
         >
-          <Image
-            source={{uri:item.images[0]}}
-            style={styles.coverImage}
-          />
+          <Image source={{ uri: item.images[0] }} style={styles.coverImage} />
           <View style={styles.contentContainer}>
             <Text style={styles.title}>{item.title}</Text>
             <Text style={[styles.price, styles.title]}>${item.price}</Text>
@@ -92,7 +99,10 @@ const ProductDetails = () => {
           </View>
 
           {/* Button Container */}
-          <TouchableOpacity style={styles.CartBtn}>
+          <TouchableOpacity
+            style={styles.CartBtn}
+            onPress={() => handleAddToCart(item)}
+          >
             <Text style={styles.CartTxt}>Add To Cart</Text>
           </TouchableOpacity>
         </ScrollView>
